@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Moose Outpost — Dubois, Wyoming</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --forest:#1B3A1F;
+  --green:#2D5A32;
+  --gold:#C8820A;
+  --gold2:#E89A12;
+  --cream:#F8F4EC;
+  --warm:#EEE8D8;
+  --dark:#0D1A0F;
+  --brown:#3D2010;
+  --tan:#C4965A;
+  --text:#1A1A14;
+  --muted:#5A5040;
+  --display:'Oswald',sans-serif;
+  --body:'Lato',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--text);font-family:var(--body);overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 60px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
+nav.scrolled{background:rgba(13,26,15,.97);backdrop-filter:blur(12px);padding:12px 60px;border-bottom:2px solid rgba(200,130,10,.3)}
+.nav-logo{font-family:var(--display);font-size:22px;color:var(--gold);text-decoration:none;letter-spacing:2px;font-weight:700;line-height:1.2}
+.nav-logo small{display:block;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.4);font-weight:400;margin-top:2px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;letter-spacing:2px;font-weight:700;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{background:var(--gold);color:#fff;padding:10px 24px;font-family:var(--display);font-size:13px;font-weight:600;border:none;cursor:pointer;letter-spacing:1px;transition:all .3s;text-decoration:none}
+.nav-btn:hover{background:var(--gold2)}
+
+/* HERO */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/ef/36/87/caption.jpg?w=900&h=500&s=1') center/cover no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(13,26,15,.93) 0%,rgba(13,26,15,.72) 55%,rgba(13,26,15,.25) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 60px;max-width:700px}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(200,130,10,.4);color:var(--gold);padding:8px 20px;font-family:var(--display);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:24px}
+.hero-moose{font-size:28px;margin-right:4px}
+.hero-title{font-family:var(--display);font-size:88px;line-height:.9;color:#fff;margin-bottom:16px;font-weight:700;letter-spacing:3px}
+.hero-title span{color:var(--gold);display:block}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;max-width:480px;margin-bottom:16px;font-weight:300;font-style:italic}
+.hero-award{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:36px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:#fff;padding:14px 36px;font-family:var(--display);font-size:13px;font-weight:600;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all .3s;text-decoration:none}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff;padding:13px 36px;font-family:var(--display);font-size:13px;font-weight:600;cursor:pointer;background:transparent;transition:all .3s;text-decoration:none;text-transform:uppercase;letter-spacing:1px}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-strip{position:absolute;bottom:0;left:0;right:0;background:var(--forest);padding:16px 60px;display:flex;justify-content:center;gap:48px;z-index:2;border-top:1px solid rgba(200,130,10,.2);flex-wrap:wrap}
+.h-strip{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:8px;font-family:var(--display)}
+.h-strip span{color:var(--gold)}
+
+/* TICKER */
+.ticker{background:var(--gold);padding:14px 0;overflow:hidden}
+.ticker-inner{display:inline-flex;animation:ticker 22s linear infinite;white-space:nowrap}
+.ticker-item{font-family:var(--display);font-size:17px;color:rgba(255,255,255,.9);padding:0 36px;letter-spacing:2px;font-weight:600}
+.ticker-dot{color:var(--dark);opacity:.5}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ABOUT */
+.about{padding:120px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;background:var(--warm)}
+.about-imgs{position:relative;height:540px}
+.about-img1{position:absolute;right:0;top:0;width:78%;height:72%;object-fit:cover;box-shadow:8px 8px 0 var(--gold)}
+.about-img2{position:absolute;left:0;bottom:30px;width:56%;height:50%;object-fit:cover;border:4px solid var(--cream);box-shadow:8px 8px 0 var(--forest)}
+.about-tag{font-family:var(--display);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:600}
+.about-title{font-family:var(--display);font-size:52px;line-height:1.0;color:var(--forest);margin-bottom:8px;font-weight:700;letter-spacing:2px}
+.about-rule{width:40px;height:3px;background:linear-gradient(to right,var(--forest),var(--gold));margin:20px 0 28px}
+.about-text p{color:var(--muted);line-height:1.9;font-size:15px;margin-bottom:16px}
+.about-quote{border-left:3px solid var(--gold);padding-left:20px;margin-top:24px;font-style:italic;font-size:15px;color:var(--brown);line-height:1.8}
+.about-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.a-badge{background:#fff;border:1px solid rgba(27,58,31,.15);padding:8px 16px;font-family:var(--display);font-size:11px;color:var(--forest);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+/* MENU */
+.menu{padding:120px 60px;background:var(--dark)}
+.menu-header{text-align:center;margin-bottom:56px}
+.menu-tag{font-family:var(--display);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:600}
+.menu-title{font-family:var(--display);font-size:64px;color:var(--cream);letter-spacing:3px;font-weight:700}
+.menu-title span{color:var(--gold)}
+.menu-tabs{display:flex;justify-content:center;gap:2px;margin-bottom:48px}
+.tab{padding:12px 32px;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;border:none;background:rgba(255,255,255,.05);transition:all .3s}
+.tab.active{background:var(--gold);color:#fff}
+.tab:hover:not(.active){background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;max-width:900px;margin:0 auto}
+.menu-item{background:rgba(255,255,255,.05);padding:28px 32px;display:flex;justify-content:space-between;gap:20px;transition:background .3s;border-left:3px solid transparent}
+.menu-item:hover{background:rgba(255,255,255,.08);border-left-color:var(--gold)}
+.menu-name{font-family:var(--display);font-size:20px;color:var(--cream);margin-bottom:6px;letter-spacing:1px;font-weight:600}
+.menu-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:260px}
+.menu-price{font-family:var(--display);font-size:22px;color:var(--gold);white-space:nowrap;font-weight:600}
+.menu-badge{display:inline-block;border:1px solid rgba(200,130,10,.3);color:var(--gold);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:2px 10px;margin-top:6px;font-family:var(--display);font-weight:600}
+
+/* GALLERY */
+.gallery{padding:0}
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 300px;gap:3px}
+.g-cell{overflow:hidden;position:relative}
+.g-cell.tall{grid-row:span 2}
+.g-cell img{width:100%;height:100%;object-fit:cover;transition:transform .5s;display:block}
+.g-cell:hover img{transform:scale(1.05)}
+.g-label{position:absolute;bottom:16px;left:16px;background:rgba(13,26,15,.8);color:var(--gold);font-family:var(--display);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;font-weight:600}
+
+/* REVIEWS */
+.reviews{padding:100px 60px;background:var(--forest);text-align:center}
+.rev-tag{font-family:var(--display);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;font-weight:600}
+.rev-title{font-family:var(--display);font-size:52px;color:var(--cream);letter-spacing:2px;margin-bottom:48px;font-weight:700}
+.rev-title span{color:var(--gold)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1000px;margin:0 auto}
+.rev-card{background:rgba(255,255,255,.07);padding:32px;border-top:3px solid var(--gold)}
+.rev-stars{color:var(--gold);font-size:16px;margin-bottom:14px;letter-spacing:3px}
+.rev-text{font-size:14px;color:rgba(255,255,255,.7);line-height:1.8;font-style:italic;margin-bottom:16px}
+.rev-author{font-family:var(--display);font-size:11px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase;font-weight:600}
+
+/* VISIT */
+.visit{padding:120px 60px;background:var(--warm);display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.visit-tag{font-family:var(--display);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:600}
+.visit-title{font-family:var(--display);font-size:52px;color:var(--forest);line-height:1.0;font-weight:700;letter-spacing:2px;margin-bottom:8px}
+.visit-rule{width:40px;height:3px;background:linear-gradient(to right,var(--forest),var(--gold));margin:20px 0 28px}
+.visit-text{color:var(--muted);line-height:1.9;font-size:15px;margin-bottom:32px}
+.c-item{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.c-icon{width:44px;height:44px;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.c-text{color:var(--muted);font-size:14px;line-height:1.6}
+.c-text strong{color:var(--text);display:block;margin-bottom:2px;font-size:15px}
+.c-text a{color:var(--muted);text-decoration:none}
+.hours-board{background:var(--dark);padding:36px;border:1px solid rgba(200,130,10,.2)}
+.hours-title{font-family:var(--display);font-size:24px;color:var(--gold);letter-spacing:2px;margin-bottom:24px;font-weight:700}
+.h-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}
+.h-day{color:rgba(255,255,255,.4)}
+.h-time{color:#fff;font-weight:700}
+.h-closed{color:rgba(255,255,255,.2)}
+.yellowstone-box{background:var(--gold);padding:28px;margin-top:20px;text-align:center}
+.ys-title{font-family:var(--display);font-size:22px;color:#fff;letter-spacing:2px;margin-bottom:8px;font-weight:700}
+.ys-sub{color:rgba(255,255,255,.8);font-size:13px;margin-bottom:16px;line-height:1.6;font-style:italic}
+.ys-btn{background:var(--dark);color:var(--gold);padding:12px 28px;font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all .3s}
+.ys-btn:hover{background:var(--forest)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:48px 60px;border-top:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:var(--display);font-size:24px;color:var(--gold);letter-spacing:3px;font-weight:700}
+.footer-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:2px;text-transform:uppercase}
+.footer-right{text-align:right;color:rgba(255,255,255,.3);font-size:13px;line-height:1.8}
+.footer-right a{color:rgba(255,255,255,.3);text-decoration:none}
+
+/* FADE */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.15s}.d2{transition-delay:.3s}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">THE MOOSE OUTPOST<small>Dubois, Wyoming</small></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#visit">Find Us</a></li>
+  </ul>
+  <a href="tel:3074553030" class="nav-btn">📞 Call Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content fade-up visible">
+    <div class="hero-tag"><span class="hero-moose">🦌</span> Best Burgers on US 287 — Dubois, Wyoming</div>
+    <h1 class="hero-title">THE MOOSE<span>OUTPOST</span></h1>
+    <p class="hero-sub">"Best burgers along US 287 between the Tetons and Riverton. Homemade buns, hand-cut fries, and hand-dipped shakes you won't forget."</p>
+    <div class="hero-award">🏆 TripAdvisor Travelers' Choice · Near Yellowstone South Entrance</div>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-primary">See Our Menu</a>
+      <a href="#visit" class="btn-ghost">Find Us →</a>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="h-strip"><span>🍔</span> Homemade Buns</div>
+    <div class="h-strip"><span>🍟</span> Hand-Cut Fries</div>
+    <div class="h-strip"><span>🥤</span> Hand-Dipped Shakes</div>
+    <div class="h-strip"><span>🦌</span> Buffalo Burgers</div>
+    <div class="h-strip"><span>🚗</span> Drive-Thru Available</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">BACON CHEDDAR BURGER <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">SALTED CARAMEL SHAKE <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">BUFFALO BURGER <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">HAND-CUT FRIES <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">RHUBARB SCONES <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">HUCKLEBERRY SHAKE <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">BACON CHEDDAR BURGER <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">SALTED CARAMEL SHAKE <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">BUFFALO BURGER <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">HAND-CUT FRIES <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">RHUBARB SCONES <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item">HUCKLEBERRY SHAKE <span class="ticker-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-imgs fade-up">
+    <img class="about-img1" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/b5/25/df/double-cheeseburger-with.jpg?w=900&h=500&s=1" alt="Double Cheeseburger with Fries">
+    <img class="about-img2" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/0e/86/6f/amazing-burgers-fresh.jpg?w=900&h=500&s=1" alt="Amazing burgers fresh buns">
+  </div>
+  <div class="fade-up d1">
+    <p class="about-tag">Our Story</p>
+    <h2 class="about-title">HOME OF THE BIG MOOSE ON RAMSHORN</h2>
+    <div class="about-rule"></div>
+    <p>The Moose Outpost is Dubois, Wyoming's beloved burger stop — a cozy little place with friendly staff, fresh-made food, and flavours that keep travellers coming back every time they pass through on their way to Yellowstone.</p>
+    <p>Everything is made fresh to order. Our ¼lb ground chuck burgers are stacked with fresh fixings on homemade buns. Fries are hand-cut from whole potatoes. Shakes are hand-dipped in creative Wyoming flavours you won't find anywhere else — rhubarb, huckleberry, salted caramel and peanut butter banana.</p>
+    <div class="about-quote">"Had the double cheeseburger with Havarti and bacon with moose sauce. One of the best burgers we've had in a long time. The buns are homemade — the shakes are extremely delicious."<br><strong style="font-style:normal;font-family:var(--display);font-size:11px;letter-spacing:2px;color:var(--gold);display:block;margin-top:8px">— TRIPADVISOR REVIEW</strong></div>
+    <div class="about-badges">
+      <div class="a-badge">🦌 Buffalo Burgers</div>
+      <div class="a-badge">🌱 Veggie Burgers</div>
+      <div class="a-badge">🚗 Drive-Thru</div>
+      <div class="a-badge">🐕 Dog Friendly</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header fade-up">
+    <p class="menu-tag">Fresh Made to Order</p>
+    <h2 class="menu-title">THE <span>MENU</span></h2>
+  </div>
+  <div style="text-align:center" class="fade-up">
+    <div style="display:inline-flex;gap:2px;margin-bottom:48px">
+      <button class="tab active" onclick="switchTab(this,'burgers')">Burgers</button>
+      <button class="tab" onclick="switchTab(this,'shakes')">Shakes</button>
+      <button class="tab" onclick="switchTab(this,'sides')">Sides & More</button>
+    </div>
+  </div>
+  <div class="menu-grid fade-up" id="menu-grid"></div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gallery-grid">
+    <div class="g-cell tall">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/ef/36/87/caption.jpg?w=900&h=500&s=1" alt="The Moose Outpost">
+      <div class="g-label">The Outpost</div>
+    </div>
+    <div class="g-cell">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/b5/25/df/double-cheeseburger-with.jpg?w=900&h=500&s=1" alt="Cheeseburger">
+      <div class="g-label">Cheeseburger</div>
+    </div>
+    <div class="g-cell">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/0e/86/6f/amazing-burgers-fresh.jpg?w=900&h=500&s=1" alt="Fresh burgers">
+      <div class="g-label">Fresh Buns</div>
+    </div>
+    <div class="g-cell">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/a1/77/2c/caption.jpg?w=300&h=-1&s=1" alt="Interior">
+      <div class="g-label">Interior</div>
+    </div>
+    <div class="g-cell">
+      <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/8d/d3/04/photo0jpg.jpg?w=300&h=200&s=1" alt="Menu">
+      <div class="g-label">Our Menu</div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews fade-up">
+  <p class="rev-tag">What People Are Saying</p>
+  <h2 class="rev-title">4.4 STARS <span>★</span> TRIPADVISOR</h2>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"Best burgers along US 287 between the Tetons & Riverton Wyoming. The buns are homemade — that makes all the difference!"</p>
+      <div class="rev-author">— Yelp Review</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"AWESOME burgers and fries! BUNS too! Double cheeseburger with Havarti and bacon with moose sauce — one of the best burgers we've had in a long time."</p>
+      <div class="rev-author">— TripAdvisor · July 2025</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-stars">★★★★☆</div>
+      <p class="rev-text">"Great food with friendly helpful staff. Chicken wrap was very good with wonderful fresh ingredients. Crispy fries. A great stop passing through Dubois!"</p>
+      <div class="rev-author">— TripAdvisor Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="fade-up">
+    <p class="visit-tag">Find Us</p>
+    <h2 class="visit-title">ON RAMSHORN STREET IN DUBOIS</h2>
+    <div class="visit-rule"></div>
+    <p class="visit-text">Look for the big moose on Ramshorn Street! We're easy to find in downtown Dubois — perfect road trip stop whether you're heading to Yellowstone, the Tetons, or just passing through on US 287.</p>
+    <div class="c-item">
+      <div class="c-icon">📍</div>
+      <div class="c-text"><strong>Address</strong>616 W Ramshorn St, Dubois, WY 82513</div>
+    </div>
+    <div class="c-item">
+      <div class="c-icon">📞</div>
+      <div class="c-text"><strong>Phone</strong><a href="tel:3074553030">(307) 455-3030</a></div>
+    </div>
+    <div class="c-item">
+      <div class="c-icon">📘</div>
+      <div class="c-text"><strong>Follow Us</strong><a href="https://www.facebook.com/p/The-Moose-Outpost-100028607628869/" target="_blank">Facebook — The Moose Outpost</a></div>
+    </div>
+  </div>
+  <div class="fade-up d1">
+    <div class="hours-board">
+      <div class="hours-title">OPENING HOURS</div>
+      <div class="h-row"><span class="h-day">Monday</span><span class="h-time">11:00 AM – 5:00 PM</span></div>
+      <div class="h-row"><span class="h-day">Tuesday</span><span class="h-time">11:00 AM – 5:00 PM</span></div>
+      <div class="h-row"><span class="h-day">Wednesday</span><span class="h-time">11:00 AM – 5:00 PM</span></div>
+      <div class="h-row"><span class="h-day">Thursday</span><span class="h-time">11:00 AM – 5:00 PM</span></div>
+      <div class="h-row"><span class="h-day">Friday</span><span class="h-time">11:00 AM – 5:00 PM</span></div>
+      <div class="h-row"><span class="h-day">Saturday</span><span class="h-closed">Closed</span></div>
+      <div class="h-row" style="border:none"><span class="h-day">Sunday</span><span class="h-closed">Closed</span></div>
+    </div>
+    <div class="yellowstone-box">
+      <div class="ys-title">🏔️ HEADING TO YELLOWSTONE?</div>
+      <div class="ys-sub">Stop in for the best burger on the way! We're right on US 287 — perfect fuel before the park.</div>
+      <a href="tel:3074553030" class="ys-btn">📞 (307) 455-3030</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">THE MOOSE OUTPOST 🦌</div>
+    <div class="footer-sub">Dubois, Wyoming · On US Highway 287</div>
+  </div>
+  <div class="footer-right">
+    616 W Ramshorn St, Dubois, WY 82513<br>
+    <a href="tel:3074553030">(307) 455-3030</a> · Mon–Fri 11am–5pm
+  </div>
+</footer>
+
+<script>
+const menuData={
+  burgers:[
+    {name:"DELUXE BURGER",desc:"¼lb ground chuck, fresh fixings, homemade bun — the classic that keeps people coming back",price:"From $10",badge:"#1 Best Seller"},
+    {name:"BACON CHEDDAR BURGER",desc:"Crispy bacon, sharp cheddar, add an egg if you want — on a fresh homemade bun",price:"From $13",badge:""},
+    {name:"DOUBLE CHEESEBURGER",desc:"Double patty, Havarti cheese, moose sauce — reviewers call it one of the best they've ever had",price:"From $14",badge:"Must Try"},
+    {name:"BUFFALO BURGER",desc:"Ground buffalo patty — lean, rich, deeply flavoured. A true Wyoming experience",price:"Ask Us",badge:"Wyoming Original"},
+    {name:"VEGGIE BURGER",desc:"A great plant-based option — same fresh fixings and homemade bun",price:"Ask Us",badge:""},
+    {name:"CHICKEN WRAP",desc:"Fresh chicken wrap with wonderful fresh ingredients — reviewer called it excellent!",price:"Ask Us",badge:""}
+  ],
+  shakes:[
+    {name:"SALTED CARAMEL SHAKE",desc:"Our most popular hand-dipped shake — sweet, salty, creamy perfection",price:"From $8",badge:"Fan Favourite"},
+    {name:"HUCKLEBERRY SHAKE",desc:"Wild Montana huckleberry — a true Rocky Mountain flavour you won't find anywhere else",price:"From $8",badge:"Wyoming Special"},
+    {name:"PEANUT BUTTER BANANA",desc:"Creamy peanut butter and ripe banana — thick, rich and incredibly satisfying",price:"From $8",badge:""},
+    {name:"RHUBARB SHAKE",desc:"Unique seasonal flavour using fresh rhubarb — sweet, tart and totally addictive",price:"From $8",badge:"Seasonal"},
+    {name:"CHOCOLATE SHAKE",desc:"Classic hand-dipped chocolate shake — rich, thick and made the old-fashioned way",price:"From $8",badge:"Classic"},
+    {name:"SEASONAL SPECIALS",desc:"Ask us what we're making today — we love to experiment with Wyoming flavours!",price:"From $8",badge:"Ask Us"}
+  ],
+  sides:[
+    {name:"HAND-CUT FRIES",desc:"Fresh potatoes hand-cut daily with peelings left on — just like homemade",price:"From $5",badge:"Homemade"},
+    {name:"SEASONED FRIES",desc:"Our hand-cut fries tossed in our house seasoning blend — crispy and flavourful",price:"From $6",badge:""},
+    {name:"RHUBARB SCONES",desc:"Fresh-baked rhubarb scones — homemade daily, a Dubois favourite",price:"Ask Us",badge:"Homemade"},
+    {name:"RICE KRISPY TREATS",desc:"Homemade Rice Krispy Treats — a sweet treat to go with your burger",price:"Ask Us",badge:"Today's Special"},
+    {name:"LEMON BARS",desc:"Fresh baked lemon bars — tangy, sweet and made from scratch",price:"Ask Us",badge:""},
+    {name:"CARROT CAKE",desc:"Homemade carrot cake — ask us if we have it today!",price:"Ask Us",badge:"Homemade"}
+  ]
+};
+
+function renderMenu(cat){
+  const grid=document.getElementById('menu-grid');
+  grid.innerHTML=menuData[cat].map(i=>`
+    <div class="menu-item">
+      <div>
+        <div class="menu-name">${i.name}</div>
+        <div class="menu-desc">${i.desc}</div>
+        ${i.badge?`<span class="menu-badge">${i.badge}</span>`:''}
+      </div>
+      <div class="menu-price">${i.price}</div>
+    </div>
+  `).join('');
+}
+
+function switchTab(el,cat){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderMenu(cat);
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+renderMenu('burgers');
+</script>
+</body>
+</html>
